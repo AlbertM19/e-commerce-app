@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Navbar, Image, Container, Nav, Form, Button } from 'react-bootstrap';
 import '../Home/Home.css';
+import ProductCard from '../ProductCard/ProductCard';
 
 function Home() {
     return (
@@ -26,6 +27,9 @@ function Home() {
                     </Nav>
                 </Container>
             </Navbar>
+            <Container fluid>
+                <ProductCard />
+            </Container>
         </>
     );
 }

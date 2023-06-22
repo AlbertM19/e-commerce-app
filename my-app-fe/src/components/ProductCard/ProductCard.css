@@ -1,3 +1,25 @@
+section {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: calc(260px * 4);
+}
+
 .card {
-    width: 100%;
+    color: black;
+    max-width: 250px;
+    margin: 5px;
+    text-decoration: none;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.card-img-top {
+    width: 248px;
+    height: 248px;
 }

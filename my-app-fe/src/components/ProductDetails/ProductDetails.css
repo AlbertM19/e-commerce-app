@@ -1,0 +1,82 @@
+.container {
+    display: flex;
+    height: calc(100vh - 136px);
+    padding: 12px;
+    /* border: 1px solid red; */
+}
+
+.container > aside {
+    padding: 10px;
+    width: 50%;
+    /* border: 1px solid blue; */
+}
+
+aside .main-image {
+    text-align: center;
+    /* border: 1px solid; */
+}
+
+aside .main-image img {
+    width: 390px;
+    height: 370px;
+    object-fit: cover;
+    margin: 10px 0;
+    /* border: 1px solid green; */
+}
+
+aside .thumbnail-image {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 49px;
+    /* border: 1px solid; */
+}
+
+aside .thumbnail-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    /* border: 1px solid green; */
+}
+
+aside img {
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px 0px #cfcfcf;
+}
+
+aside:last-of-type {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.5;
+}
+
+aside:last-of-type > * {
+    margin: 15px 0;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+aside form {
+    display: flex;
+    width: 100%;
+}
+
+.input-group {
+    width: 30%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input {
+    text-align: center;
+}
+
+form > button {
+    margin-left: 20px;
+}

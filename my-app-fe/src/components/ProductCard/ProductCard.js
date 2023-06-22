@@ -1,22 +1,26 @@
-import React from "react";
-import { Card } from "react-bootstrap";
-import { getProduct } from "../Helper/ProductList";
+import React, {useState} from 'react';
+import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 import "./ProductCard.css";
+import { productList } from '../Helper/ProductList';
 
 function ProductCard() {
-  const products = [...getProduct()];
+  const [products] = useState([...productList()]);
 
   return (
     <>
-      {products.map((item, index) => (
-          <Card key={index}>
-            <Card.Img variant="top" src={item.image_1} />
-            <Card.Body>
-              <Card.Title>{item.product_name}</Card.Title>
-              <Card.Text>{item.descriptions}</Card.Text>
-            </Card.Body>
-          </Card>
-      ))}
+      <section>
+        {products.map((product) => (
+            <Card key={product.id} as={Link} to={`/product-details/${product.id}`}>
+              <Card.Img variant="top" src={product.image_1} />
+              <Card.Body>
+                <Card.Title>{product.product_name}</Card.Title>
+                <Card.Text>{product.price}</Card.Text>
+              </Card.Body>
+            </Card>
+        ))}
+      </section>
     </>
   );
 }

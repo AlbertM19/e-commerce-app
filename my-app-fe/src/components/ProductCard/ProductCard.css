@@ -1,15 +1,12 @@
-section {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    width: calc(260px * 4);
-}
-
 .card {
     color: black;
     max-width: 250px;
-    margin: 5px;
+    margin: 15px;
     text-decoration: none;
+}
+
+.card:last-of-type {
+    float: left;
 }
 
 .card-body {

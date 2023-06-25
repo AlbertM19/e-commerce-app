@@ -1,0 +1,22 @@
+.cart-container{
+     margin: 50px auto;
+}
+
+table {
+     height: auto;
+}
+
+tr > td:first-of-type {
+     display: flex;
+     align-items: center;
+}
+
+tr > td > img {
+     width: 150px;
+     height: 150px;
+     object-fit: cover;
+}
+
+tr > td > p {
+     margin: 0 0 0 20px;
+}

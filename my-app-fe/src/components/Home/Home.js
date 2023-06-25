@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Image, Container, Nav, Form, Button } from 'react-bootstrap';
-import {Outlet} from 'react-router-dom';
-
-import '../Home/Home.css';
 import ProductCard from '../ProductCard/ProductCard';
 
+import '../Home/Home.css';
+import { productList } from '../Helper/ProductList';
+import { Outlet } from 'react-router-dom';
+
 function Home() {
+  const [products] = useState([...productList()]);
+
   return (
     <>
       <Navbar bg="light" variant="light">
@@ -30,11 +33,15 @@ function Home() {
             </Form>
             <Nav.Link href='/products'>Products</Nav.Link>
             <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href='/cart'>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <Outlet />
+      <Container className='card-container'>
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </Container>
     </>
   );
 }

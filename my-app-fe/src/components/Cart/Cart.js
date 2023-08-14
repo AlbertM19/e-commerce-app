@@ -1,12 +1,12 @@
-import { Container, Image, Table } from 'react-bootstrap';
-import { useState } from 'react';
+import React, { useContext } from 'react';
+import { Container, Table } from 'react-bootstrap';
 
 import '../Cart/Cart.css';
-import { productList } from '../Helper/ProductList';
-
+import CartItem from './CartItem';
+import UserContext from '../../UserContext';
 
 function Cart() {
-  const [products] = useState([...productList()]);
+  const {cartItems} = useContext(UserContext);
 
   return (
     <Container className='cart-container'>
@@ -20,29 +20,14 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <Image src={products[0].image_1} />
-              <p>{products[0].product_name}</p>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          {/* <tr>
-            <td>
-              <Image src={products[1].image_1} />
-              <p>{products[1].product_name}</p>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr> */}
+          {cartItems && (cartItems.map((cartItem) => (
+            <CartItem 
+              product_img={cartItem.product_img} 
+              name={cartItem.product_name} 
+              quantity={cartItem.quantity}
+              price={cartItem.price}
+            />
+          )))}
         </tbody>
       </Table>
     </Container>

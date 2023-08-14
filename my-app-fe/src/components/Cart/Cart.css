@@ -11,6 +11,11 @@ tr > td:first-of-type {
      align-items: center;
 }
 
+tr > th, tr > td {
+     text-align: center;
+     vertical-align: middle;
+}
+
 tr > td > img {
      width: 150px;
      height: 150px;

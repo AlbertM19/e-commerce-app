@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Navbar, Image, Container, Nav, Form, Button } from 'react-bootstrap';
-import ProductCard from '../ProductCard/ProductCard';
+import React, { useContext } from 'react';
+import { Navbar, Image, Container, Nav, Form, Button, Badge } from 'react-bootstrap';
 
-import '../Home/Home.css';
-import { productList } from '../Helper/ProductList';
 import { Outlet } from 'react-router-dom';
 
-function Home() {
-  const [products] = useState([...productList()]);
+function Home({cartCount}) {
+  const cartTotal = cartCount;
+  
 
   return (
     <>
@@ -31,17 +29,15 @@ function Home() {
               />
               <Button variant="outline-success">Search</Button>
             </Form>
-            <Nav.Link href='/products'>Products</Nav.Link>
+            <Nav.Link href='/'>Products</Nav.Link>
             <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href='/cart'>Cart</Nav.Link>
+            <Nav.Link href='/cart'>Cart<Badge className='bg-danger'>{cartTotal}</Badge></Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <Container className='card-container'>
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </Container>
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }

@@ -3,10 +3,10 @@ import { Container, Table } from 'react-bootstrap';
 
 import '../Cart/Cart.css';
 import CartItem from './CartItem';
-import UserContext from '../../UserContext';
+import { StoreContext } from '../../contexts/StoreContext';
 
 function Cart() {
-  const {cartItems} = useContext(UserContext);
+  const { cart } = useContext(StoreContext)
 
   return (
     <Container className='cart-container'>
@@ -20,12 +20,13 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          {cartItems && (cartItems.map((cartItem) => (
-            <CartItem 
-              product_img={cartItem.product_img} 
-              name={cartItem.product_name} 
-              quantity={cartItem.quantity}
-              price={cartItem.price}
+          {cart && (cart.items.map((item) => (
+            <CartItem
+              key={item.id}
+              product_img={item.product_img}
+              name={item.product_name}
+              quantity={item.quantity}
+              price={item.price}
             />
           )))}
         </tbody>

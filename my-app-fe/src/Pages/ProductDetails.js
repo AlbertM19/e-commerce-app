@@ -1,83 +1,86 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import { Button, Container, Image, InputGroup, Form } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import './ProductDetails.css';
-import UserContext from '../UserContext';
-import { productList } from '../components/Helper/ProductList';
+import { StoreContext } from '../contexts/StoreContext';
 
 function ProductDetails() {
   const { id } = useParams();
-  const [products] = useState([...productList()]);
+  const { cart, setCart, ENDPOINT, setError } = useContext(StoreContext)
+  const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1);
-  const product = products.filter((product) => product.id === +id);
-  const { image_1, image_2, image_3, image_4, product_name, descriptions, price, price_int } = product[0];
-  const item = {'id': id, 'product_name': product_name, 'quantity': quantity, 'price': price_int, 'product_img': image_1};
+  const [newImage, setNewImage] = useState(null);
+  const { image_1, image_2, image_3, image_4, product_name, description, price, price_int } = product;
+  const item = { 'id': id, 'product_name': product_name, 'quantity': quantity, 'price': price_int, 'product_img': image_1 };
 
-  const {cartItems, setCartItems, addToCart} = useContext(UserContext);
+  useEffect(() => {
+    axios.get(`${ENDPOINT}/api/products/${id}`)
+      .then(response => setProduct(response.data))
+      .catch(e => setError(e))
+  }, [])
 
-  const handleMinus = () => {
-    setQuantity(quantity - 1);
-  }
-  const handleAdd = () => {
-    setQuantity(quantity + 1);
-  }
-
-  const [newImage, setNewImage] = useState(image_1);
-  const changeImage1 = () => {
-    setNewImage(image_1);
-  }
-  const changeImage2 = () => {
-    setNewImage(image_2);
-  }
-  const changeImage3 = () => {
-    setNewImage(image_3);
-  }
-  const changeImage4 = () => {
-    setNewImage(image_4);
+  function itemQty(num) {
+    setQuantity(prev => {
+      return prev + num
+    })
   }
 
-  // const addToCart = () => {
-  //   const item = {'id': id, 'product_name': product_name, 'quantity': quantity, 'price': price_int, 'product_img': image_1};
-  //   const existingItem = JSON.parse(localStorage.getItem('cart')) ?? [];
-  //   setCartCount(cartCount + quantity);
-    
-  //   return localStorage.setItem('cart', JSON.stringify([...existingItem, item]));
-  // }
+  function changeImage(image) {
+    return setNewImage(image)
+  }
+
+  const addToCart = () => {
+    const itemIndex = cart.items.findIndex(item => item.id === id)
+    console.log(itemIndex)
+    if (itemIndex !== -1) {
+      const updatedItem = [...cart.items]
+      updatedItem[itemIndex].quantity += quantity
+      setCart({
+        items: [...updatedItem],
+        itemQty: cart.itemQty += quantity
+      })
+    } else {
+      setCart({
+        items: [...cart.items, item],
+        itemQty: cart.itemQty += quantity
+      })
+    }
+  }
 
   return (
     <>
       <Container className='product-details-container'>
         <aside>
           <div className="main-image">
-            <Image src={newImage} alt="" />
+            <Image src={newImage ?? image_1} alt="" />
           </div>
           <div className="thumbnail-image">
-            <Image className="thumbnail_1" src={image_1} alt="" onClick={changeImage1} />
-            <Image className="thumbnail_2" src={image_2} alt="" hidden={image_2 === ''} onClick={changeImage2} />
-            <Image className="thumbnail_3" src={image_3} alt="" hidden={image_3 === ''} onClick={changeImage3} />
-            <Image className="thumbnail_4" src={image_4} alt="" hidden={image_4 === ''} onClick={changeImage4} />
+            <Image className="thumbnail_1" src={image_1} alt="" onClick={() => changeImage(image_1)} />
+            <Image className="thumbnail_2" src={image_2} alt="" hidden={image_2 === ''} onClick={() => changeImage(image_2)} />
+            <Image className="thumbnail_3" src={image_3} alt="" hidden={image_3 === ''} onClick={() => changeImage(image_3)} />
+            <Image className="thumbnail_4" src={image_4} alt="" hidden={image_4 === ''} onClick={() => changeImage(image_4)} />
           </div>
         </aside>
         <aside>
           <h1>{product_name}</h1>
-          <p>{descriptions}</p>
+          <p>{description}</p>
           <h5>{price}</h5>
           <div>
             <Form>
               <InputGroup>
-                {quantity <= 1
-                  ? <Button disabled onClick={handleMinus}>-</Button>
-                  : <Button onClick={handleMinus}>-</Button>}
+                <Button disabled={quantity === 1} onClick={() => itemQty(-1)}>-</Button>
                 <Form.Control type="number"
+                  name="quantity"
                   value={quantity}
                   min={1}
                   onChange={(e) => setQuantity(e.target.value)}
                   onWheel={(e) => e.preventDefault()}
                 />
-                <Button onClick={handleAdd}>+</Button>
+                <Button onClick={() => itemQty(1)}>+</Button>
               </InputGroup>
-              <Button onClick={() => {addToCart(item); setCartItems(item)}}>Add to Cart</Button>
+              <Button onClick={addToCart}>Add to Cart</Button>
             </Form>
           </div>
         </aside>

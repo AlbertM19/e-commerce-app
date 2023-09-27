@@ -1,19 +1,18 @@
 import { useContext, useState } from 'react';
-import { productList } from '../components/Helper/ProductList';
+
 import ProductCard from '../Pages/ProductCard';
-import { Outlet } from 'react-router-dom';
-import UserContext from '../UserContext';
+
+import { StoreContext } from '../contexts/StoreContext';
 
 export default function ProductLayout() {
-     const {products} = useContext(UserContext);
+  const { products } = useContext(StoreContext);
 
-     return (
-          <div className="product-layout">
-               {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-               ))}
-               <Outlet />
-          </div>
+  return (
+    <div className="product-layout">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
 
-     )
+  )
 }

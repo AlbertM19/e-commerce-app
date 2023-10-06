@@ -1,19 +1,46 @@
-import React from 'react';
-import { Image } from 'react-bootstrap';
+import { TrashIcon } from '@heroicons/react/24/outline'
 
-function CartItem({ product_img, name, quantity, price }) {
+import { findItem, useStoreContext, formatPrice } from '../../contexts/StoreContext'
+
+function CartItem({ item }) {
+  const { cart, setCart } = useStoreContext()
+  const { items, itemQty } = cart
+
+  const handleCheckboxChange = (e) => {
+    const { id, checked } = e.target
+    const itemIndex = findItem(items, id)
+    items[itemIndex].checkedout = checked
+
+    setCart({
+      items: [...items],
+      itemQty: itemQty
+    })
+  }
+
   return (
-    <>
-      <tr>
-        <td>
-          <Image src={product_img} />
-          <p>{name}</p>
-        </td>
-        <td>{quantity}</td>
-        <td>{`PHP. ${price}`}</td>
-        <td>{`PHP. ${quantity * price}`}</td>
-      </tr>
-    </>
+    <div className="item">
+      <label>
+        <input
+          type="checkbox"
+          id={item.id}
+          checked={item.checkedout}
+          onChange={handleCheckboxChange}
+        />
+        <a href={`product-details/${item.id}`} alt={item.product_name}>
+          <img src={item.product_img} alt={item.product_name} />
+          <p>{item.product_name}</p>
+        </a>
+        <div className="qty">
+          <p>{item.quantity}</p>
+        </div>
+        <div className="subtotal">
+          <p>{formatPrice(item.quantity * item.price)}</p>
+        </div>
+        <div className="delete-item">
+          <TrashIcon id={item.id} />
+        </div>
+      </label>
+    </div>
   )
 }
 

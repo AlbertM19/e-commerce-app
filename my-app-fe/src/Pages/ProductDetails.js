@@ -1,19 +1,22 @@
-import React, { useState, useContext, useEffect, useMemo } from 'react';
-import { Button, Container, Image, InputGroup, Form } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { Button, Container, Image, InputGroup, Form } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
-import './ProductDetails.css';
-import { StoreContext } from '../contexts/StoreContext';
+import './ProductDetails.css'
+import { findItem, useStoreContext } from '../contexts/StoreContext'
 
 function ProductDetails() {
-  const { id } = useParams();
-  const { cart, setCart, ENDPOINT, setError } = useContext(StoreContext)
+  const { id } = useParams()
+  const { cart, setCart, ENDPOINT, setError } = useStoreContext()
   const [product, setProduct] = useState({})
-  const [quantity, setQuantity] = useState(1);
-  const [newImage, setNewImage] = useState(null);
-  const { image_1, image_2, image_3, image_4, product_name, description, price, price_int } = product;
-  const item = { 'id': id, 'product_name': product_name, 'quantity': quantity, 'price': price_int, 'product_img': image_1 };
+  const [quantity, setQuantity] = useState(1)
+  const [newImage, setNewImage] = useState(null)
+  const { image_1, image_2, image_3, image_4, product_name, description, price, price_int } = product
+  const item = {
+    'id': id, 'product_name': product_name, 'quantity': quantity,
+    'price': price_int, 'product_img': image_1, 'checkedout': false
+  }
 
   useEffect(() => {
     axios.get(`${ENDPOINT}/api/products/${id}`)
@@ -32,8 +35,8 @@ function ProductDetails() {
   }
 
   const addToCart = () => {
-    const itemIndex = cart.items.findIndex(item => item.id === id)
-    console.log(itemIndex)
+    const itemIndex = findItem(cart.items, id)
+
     if (itemIndex !== -1) {
       const updatedItem = [...cart.items]
       updatedItem[itemIndex].quantity += quantity
@@ -86,7 +89,7 @@ function ProductDetails() {
         </aside>
       </Container>
     </>
-  );
+  )
 }
 
-export default ProductDetails;
+export default ProductDetails

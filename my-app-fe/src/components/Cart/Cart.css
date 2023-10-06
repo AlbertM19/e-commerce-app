@@ -1,27 +1,146 @@
-.cart-container{
-     margin: 50px auto;
+.cart-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 25rem;
+  grid-column-gap: 2rem;
+  margin: 20px;
 }
 
-table {
-     height: auto;
+.item-wrapper, .summary-wrapper {
+  border: 2px solid rgb(211, 211, 211);
+  border-radius: 5px;
+  height: fit-content;
 }
 
-tr > td:first-of-type {
-     display: flex;
-     align-items: center;
+.item-wrapper .item-head {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  font-weight: 600;
 }
 
-tr > th, tr > td {
-     text-align: center;
-     vertical-align: middle;
+.item-wrapper .item-list, .summary-wrapper form {
+  border-top: 2px solid rgb(211, 211, 211);
+  margin: 0 auto;
+  width: 95%;
 }
 
-tr > td > img {
-     width: 150px;
-     height: 150px;
-     object-fit: cover;
+.item-head span:first-of-type, .item label a {
+  width: 60%;
 }
 
-tr > td > p {
-     margin: 0 0 0 20px;
+.item-head span:nth-of-type(2), .item label .qty {
+  width: 10%;
+}
+
+.item-head span:nth-of-type(3), .item label .subtotal {
+  width: 25%;
+}
+
+.item-head span:last-of-type, .item label .delete-item {
+  width: 5%;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgb(211, 211, 211);
+
+}
+
+.item label {
+    display: inline-flex;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+label a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+
+label a img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+label p {
+  margin: 0;
+}
+
+.summary-wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summary-wrapper .order-summary {
+  padding: 10px 0;
+}
+.summary-wrapper .order-total {
+  border-top: 2px solid rgb(211, 211, 211);
+  padding: 10px 0;
+}
+
+.summary-wrapper .order-total p {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.summary-wrapper .order-total .checkout-btn {
+  display: grid;
+}
+
+.summary-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.summary-head h4 {
+  font-weight: 500;
+  margin: 0;
+}
+
+.summary-head p {
+  align-self: flex-end;
+  margin: 0;
+  font-weight: 400;
+}
+
+.summary-item {
+ display: grid;
+ grid-template-columns: 50px auto;
+ column-gap: 1rem;
+ padding: 10px 0;
+}
+
+.summary-item a img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.summary-item .item-details * {
+  margin: 0;
+}
+
+.summary-item .item-details p {
+  font-size: 15px;
+}
+
+.summary-item .item-details h6 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+svg {
+  width: 20px;
+  color: darkgray;
 }

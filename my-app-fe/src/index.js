@@ -6,8 +6,9 @@ import reportWebVitals from './reportWebVitals'
 
 import App from './App'
 import ProductLayout from './Layouts/ProductLayout'
-import Cart from './components/Cart/CartList'
 import ProductDetails from './Pages/ProductDetails'
+import Cart from './components/Cart/Cart'
+import Checkout from './components/Checkout'
 
 const router = createBrowserRouter([
   {
@@ -19,15 +20,18 @@ const router = createBrowserRouter([
         element: <ProductLayout />
       },
       {
+        path: 'product-details/:id',
+        element: <ProductDetails />
+      },
+      {
         path: 'cart',
         element: <Cart />
       },
       {
-        path: 'product-details/:id',
-        element: <ProductDetails />
+        path: 'checkout',
+        element: <Checkout />
       }
     ]
-
   }
 ])
 

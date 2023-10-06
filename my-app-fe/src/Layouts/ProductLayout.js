@@ -1,11 +1,9 @@
-import { useContext, useState } from 'react';
+import { useStoreContext } from '../contexts/StoreContext'
 
-import ProductCard from '../Pages/ProductCard';
+import ProductCard from '../Pages/ProductCard'
 
-import { StoreContext } from '../contexts/StoreContext';
-
-export default function ProductLayout() {
-  const { products } = useContext(StoreContext);
+function ProductLayout() {
+  const { products } = useStoreContext()
 
   return (
     <div className="product-layout">
@@ -13,6 +11,7 @@ export default function ProductLayout() {
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
-
   )
 }
+
+export default ProductLayout

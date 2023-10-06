@@ -1,12 +1,28 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react"
 
-export const StoreContext = createContext();
+export const StoreContext = createContext()
+
+export const useStoreContext = () => {
+  return useContext(StoreContext)
+}
+
+export const findItem = (item, id) => {
+  return item.findIndex(i => i.id === id)
+}
+
+export const formatPrice = (price) => {
+  return price.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'PHP'
+  })
+}
 
 const StoreContextProvider = (props) => {
   const [products, setProducts] = useState([])
-  const [unit, setUnit] = useState(0)
   const [error, setError] = useState(null)
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ?? { items: [], itemQty: 0 })
+  const [isChecked, setIsChecked] = useState(false)
+  const [checkoutItem, setCheckoutItem] = useState([])
 
   const ENDPOINT = 'http://localhost:5000'
 
@@ -15,10 +31,17 @@ const StoreContextProvider = (props) => {
   }, [cart])
 
   return (
-    <StoreContext.Provider value={{ products, setProducts, cart, setCart, error, setError, ENDPOINT }}>
+    <StoreContext.Provider value={{
+      products, setProducts,
+      cart, setCart,
+      isChecked, setIsChecked,
+      checkoutItem, setCheckoutItem,
+      error, setError,
+      ENDPOINT
+    }}>
       {props.children}
     </StoreContext.Provider>
-  );
+  )
 }
 
-export default StoreContextProvider;
+export default StoreContextProvider

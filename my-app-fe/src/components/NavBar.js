@@ -1,10 +1,6 @@
-import { useContext, useMemo } from 'react';
-import { Navbar, Image, Container, Nav, Form, Button, Badge } from 'react-bootstrap';
-import { StoreContext } from '../contexts/StoreContext';
+import { Navbar, Image, Container, Nav, Form, Button, Badge } from 'react-bootstrap'
 
 function NavBar({ cart }) {
-
-  console.log(`Navbar component rendering`)
 
   return (
     <Navbar bg="light" variant="light">
@@ -34,7 +30,7 @@ function NavBar({ cart }) {
         </Nav>
       </Container>
     </Navbar>
-  );
+  )
 }
 
-export default NavBar;
+export default NavBar
